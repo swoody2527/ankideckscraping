@@ -6,7 +6,13 @@ def scrape_website(url):
     response = requests.get(url)
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, 'html.parser')
-        return soup
+        dd_tags = soup.find_all("dd")
+        words = []
+        for dd_tag in dd_tags:
+            word = dd_tag.find("a").text
+            words.append(word)
+        return words
+        
     else:
         print("Couldn't access data", response.status_code)
         return None
